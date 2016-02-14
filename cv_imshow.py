@@ -43,18 +43,20 @@ class cv_imshow(gdb.Command):
     def __init__(self):
         super(cv_imshow, self).__init__('cv_imshow',
                                         gdb.COMMAND_SUPPORT,
-                                        gdb.COMPLETE_FILENAME)
+                                        gdb.COMPLETE_SYMBOL)
 
     def invoke (self, arg, from_tty):
         # Access the variable from gdb.
-        frame = gdb.selected_frame()
-        val = frame.read_var(arg)
+        args = gdb.string_to_argv(arg)
+        val = gdb.parse_and_eval(args[0])
         if str(val.type.strip_typedefs()) == 'IplImage *':
             img_info = self.get_iplimage_info(val)
         else:
             img_info = self.get_cvmat_info(val)
 
         if img_info: self.show_image(*img_info)
+
+        self.dont_repeat()
 
     @staticmethod
     def get_cvmat_info(val):

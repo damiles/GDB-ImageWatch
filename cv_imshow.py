@@ -24,18 +24,21 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from builtins import str as text
+from builtins import range
+
 import gdb
 from PIL import Image
 import matplotlib
 matplotlib.use('TKAgg')
 import matplotlib.pyplot as pl
+
 import numpy as np
 import struct
 
 
-
 def chunker(seq, size):
-    return (seq[pos:pos + size] for pos in xrange(0, len(seq), size))
+    return (seq[pos:pos + size] for pos in range(0, len(seq), size))
 
 class cv_imshow(gdb.Command):
     """Diplays the content of an opencv image"""
@@ -96,7 +99,7 @@ class cv_imshow(gdb.Command):
         gdb.write(cv_type_name + ' with ' + str(channels) + ' channels, ' +
                   str(rows) + ' rows and ' +  str(cols) +' cols\n')
 
-        data_address = unicode(val['data']).encode('utf-8').split()[0]
+        data_address = text(val['data']).encode('utf-8').split()[0]
         data_address = int(data_address, 16)
 
         return (cols, rows, channels, line_step, data_address, data_symbol)
@@ -144,7 +147,7 @@ class cv_imshow(gdb.Command):
         gdb.write(cv_type_name + ' with ' + str(channels) + ' channels, ' +
                   str(rows) + ' rows and ' +  str(cols) +' cols\n')
 
-        data_address = unicode(val['imageData']).encode('utf-8').split()[0]
+        data_address = text(val['imageData']).encode('utf-8').split()[0]
         data_address = int(data_address, 16)
         if str(val['roi']) != '0x0':
             x_offset = int(val['roi']['xOffset'])
@@ -227,7 +230,7 @@ class cv_imshow(gdb.Command):
 
         if n_channel == 3:
             # OpenCV stores the channels in BGR mode. Convert to RGB while packing.
-            image_data = zip(*[image_data[i::3] for i in [2, 1, 0]])
+            image_data = list(zip(*[image_data[i::3] for i in [2, 1, 0]]))
 
         # Show image.
         img = Image.new(mode, (width, height))

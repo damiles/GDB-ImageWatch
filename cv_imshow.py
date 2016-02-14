@@ -26,8 +26,12 @@
 
 import gdb
 from PIL import Image
-import pylab as pl
+import matplotlib
+matplotlib.use('TKAgg')
+import matplotlib.pyplot as pl
+import numpy as np
 import struct
+
 
 
 def chunker(seq, size):
@@ -226,7 +230,7 @@ class cv_imshow(gdb.Command):
         # Show image.
         img = Image.new(mode, (width, height))
         img.putdata(image_data)
-        img = pl.asarray(img);
+        img = np.asarray(img);
 
         fig = pl.figure()
         b = fig.add_subplot(111)

@@ -3,6 +3,12 @@
 This is a simple python extension script to visualize interactively OpenCV
 images while debugging with gdb.
 
+## PYTHON VERSION
+
+ Requires python 3 by default (for python 2, refer to branch `py2` ).
+ It seems that `gdb` is using python 3 by default in newer versions of Ubuntu
+ from [discussions](http://stackoverflow.com/questions/26243956/how-to-change-the-python-interpreter-that-gdb-uses) here.
+
 ## INSTALL
 
  You need to have gdb (version 7.2 or newer).
@@ -29,10 +35,6 @@ images while debugging with gdb.
 ```
 
  from within your gdb session.
-
- On some systems (Arch Linux with DWM), coordinate and pixel value are displayed
- automatically while moving the cursor. On others (Mac OS X) you may need to hold 
- the left mouse button while moving the cursor.
 
 ## DEMO
 

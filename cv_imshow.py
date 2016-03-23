@@ -25,7 +25,6 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import gdb
-from PIL import Image
 import matplotlib
 matplotlib.use('TKAgg')
 import matplotlib.pyplot as pl
@@ -227,10 +226,11 @@ class cv_imshow(gdb.Command):
             # OpenCV stores the channels in BGR mode. Convert to RGB while packing.
             image_data = zip(*[image_data[i::3] for i in [2, 1, 0]])
 
-        # Show image.
-        img = Image.new(mode, (width, height))
-        img.putdata(image_data)
-        img = np.asarray(img);
+        img = None
+        if mode == 'L':
+            img = np.reshape(image_data, (height, width)).astype(np.uint8)
+        elif mode == 'RGB':
+            img = np.reshape(image_data, (height, width, 3)).astype(np.uint8)
 
         fig = pl.figure()
         b = fig.add_subplot(111)

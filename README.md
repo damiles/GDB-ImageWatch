@@ -30,10 +30,6 @@ images while debugging with gdb.
 
  from within your gdb session.
 
- On some systems (Arch Linux with DWM), coordinate and pixel value are displayed
- automatically while moving the cursor. On others (Mac OS X) you may need to hold 
- the left mouse button while moving the cursor.
-
 ## DEMO
 
  To use the demo

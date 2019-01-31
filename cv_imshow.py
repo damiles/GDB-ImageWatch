@@ -51,7 +51,7 @@ class cv_imshow(gdb.Command):
         # Access the variable from gdb.
         args = gdb.string_to_argv(arg)
         val = gdb.parse_and_eval(args[0])
-        if str(val.type.strip_typedefs()) == 'IplImage *':
+        if str(val.type.strip_typedefs()) == 'IplImage *' or str(val.type.strip_typedefs()) == 'const IplImage *':
             img_info = self.get_iplimage_info(val)
         else:
             img_info = self.get_cvmat_info(val)
